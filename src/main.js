@@ -4,6 +4,9 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+//这里设置总线
+Vue.prototype.$bus = new Vue()
+
 new Vue({
   render: h => h(App),
   router,
