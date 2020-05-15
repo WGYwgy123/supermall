@@ -31,8 +31,13 @@
         this.$bus.$emit('itemImageLoad')
       },
       itemClick() {
-        this.$router.push('/detail/' + this.goodsItem.iid)
-        console.log(this.goodsItem);
+        if(this.goodsItem.iid ){
+          this.$router.push('/detail/' + this.goodsItem.iid)
+        }
+        // if(this.goodsItem.item_id){
+        //   this.$router.push('/detail/' + this.goodsItem.item_id)
+        // }
+        //console.log(this.goodsItem);
       }
     }
   }
