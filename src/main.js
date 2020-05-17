@@ -19,9 +19,10 @@ Vue.use(toast)
 FastClick.attach(document.body)
 
 //使用懒加载的插件
-Vue.use(VueLazyload, {
-  loading: require('')
-})
+Vue.use(VueLazyload)
+// Vue.use(VueLazyload, {
+//   loading: require('你好啊')
+// })
 new Vue({
   render: h => h(App),
   router,
