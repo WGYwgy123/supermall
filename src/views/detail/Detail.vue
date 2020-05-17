@@ -15,6 +15,7 @@
     </scroll>
     <detail-bottom-bar @addCart="addToCart"/>
     <back-top @click.native="backClick" v-show="isShowBackTop"/>
+<!--    <toast :message="message" :show="show"></toast>-->
   </div>
 </template>
 
@@ -30,10 +31,12 @@
 
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from 'components/content/goods/GoodsList'
+  // import Toast from "components/content/toast/Toast";
 
   import {getDetail, Goods, Shop, GoodsParam, getRecommend} from "network/detail";
   import {itemListenerMixin, backTopMixin} from "common/mixin";
   import {debounce} from "common/utils";
+  import {mapActions} from 'vuex'
 
   export default {
     name: "Detail",
@@ -48,6 +51,7 @@
       DetailBottomBar,
       Scroll,
       GoodsList,
+      // Toast
     },
     mixins: [itemListenerMixin, backTopMixin],
     data() {
@@ -62,6 +66,9 @@
         recommends: [],
         themeTopYs: [],
         getThemeTopY: null,
+        currentIndex: 0,
+        // message: '',
+        // show: false
       }
     },
     created() {
@@ -125,6 +132,9 @@
 
     },
     methods: {
+      ...mapActions({
+        addCart: 'addCart'
+      }),
       //4.监听详情页面图片加载完成
       imageLoad() {
         this.refresh()
@@ -155,7 +165,22 @@
         product.price = this.goods.realPrice
         product.iid = this.iid
 
-        this.$store.dispatch('addCart',product)
+        //(1.Promise 2.mapActions)
+        // this.$store.dispatch('addCart',product)
+        this.addCart(product).then(res => {
+          // this.show = true;
+          // this.message = res;
+          //
+          // setTimeout(() => {
+          //   this.show = false;
+          //   this.message = ''
+          // },1500)
+          console.log(this.$toast);
+          this.$toast.show(res, 2000)
+        })
+        // this.$store.dispatch('addCart',product).then(res => {
+        //   console.log(res);
+        // })
       }
     }
   }
